@@ -13,28 +13,51 @@ if (UNIX)
 endif ()
 
 add_library(imgui OBJECT
-        source/imgui.cpp
-        source/imgui_demo.cpp
-        source/imgui_draw.cpp
-        source/imgui_freetype.cpp
-        source/imgui_impl_glfw.cpp
-        source/imgui_impl_opengl3.cpp
-        source/imgui_tables.cpp
-        source/imgui_widgets.cpp
+    source/imgui.cpp
+    source/imgui_demo.cpp
+    source/imgui_draw.cpp
+    source/imgui_freetype.cpp
+    source/imgui_impl_glfw.cpp
+    source/imgui_impl_opengl3.cpp
+    source/imgui_tables.cpp
+    source/imgui_widgets.cpp
 
-        source/cimgui.cpp
+    source/cimgui.cpp
 
-        source/TextEditor.cpp
+    source/TextEditor.cpp
 
-        source/imnodes.cpp
+    source/imnodes.cpp
 
-        source/implot.cpp
-        source/implot_items.cpp
-        source/implot_demo.cpp
+    source/implot.cpp
+    source/implot_items.cpp
+    source/implot_demo.cpp
 
-        source/fonts/fontawesome_font.c
-        source/fonts/codicons_font.c
-        source/fonts/unifont_font.c
+    source/fonts/fontawesome_font.cpp
+    source/fonts/codicons_font.cpp
+    source/fonts/unifont_font.cpp
+)
+
+target_precompile_headers(imgui PRIVATE
+    include/imconfig.h
+    include/imgui_internal.h
+    include/imgui.h
+    include/imgui_freetype.h
+
+    include/imnodes.h
+    include/imnodes_internal.h
+
+    include/implot.h
+    include/implot_internal.h
+
+    include/imstb_textedit.h
+    include/imstb_truetype.h
+    include/stb_image.h
+
+    include/TextEditor.h
+
+    include/fonts/unifont_font.h
+    include/fonts/codicons_font.h
+    include/fonts/fontawesome_font.h
 )
 
 add_compile_definitions(IMGUI_IMPL_OPENGL_LOADER_GLAD)

@@ -77,6 +77,8 @@
 // On Windows you may use vcpkg with 'vcpkg install freetype --triplet=x64-windows' + 'vcpkg integrate install'.
 // IMHEX PATCH BEGIN
 #define IMGUI_ENABLE_FREETYPE
+#define IMGUI_DEFINE_MATH_OPERATORS
+#define CIMGUI_FREETYPE
 // IMHEX PATCH END
 
 //---- Use stb_truetype to build and rasterize the font atlas (default)

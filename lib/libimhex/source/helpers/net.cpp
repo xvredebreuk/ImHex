@@ -67,13 +67,13 @@ namespace hex {
         auto &net = *static_cast<Net *>(contents);
 
         if (dlTotal > 0)
-            net.m_progress = float(dlNow) / dlTotal;
+            net.setProgress(float(dlNow) / dlTotal);
         else if (ulTotal > 0)
-            net.m_progress = float(ulNow) / ulTotal;
+            net.setProgress(float(ulNow) / ulTotal);
         else
-            net.m_progress = 0.0F;
+            net.setProgress(0.0F);
 
-        return net.m_shouldCancel ? CURLE_ABORTED_BY_CALLBACK : CURLE_OK;
+        return net.isCanceled() ? CURLE_ABORTED_BY_CALLBACK : CURLE_OK;
     }
 
     void Net::setCommonSettings(std::string &response, const std::string &url, u32 timeout, const std::map<std::string, std::string> &extraHeaders, const std::string &body) {

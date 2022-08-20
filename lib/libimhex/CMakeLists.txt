@@ -111,7 +111,7 @@ endif()
 
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
 
-set(LIBIMHEX_SOURCES
+add_library(libimhex SHARED
     source/api/event.cpp
     source/api/imhex_api.cpp
     source/api/content_registry.cpp
@@ -141,7 +141,52 @@ set(LIBIMHEX_SOURCES
 
     source/ui/imgui_imhex_extensions.cpp
     source/ui/view.cpp
-    )
+)
+
+target_precompile_headers(libimhex PRIVATE
+    include/hex.hpp
+    include/hex/plugin.hpp
+
+    include/hex/helpers/net.hpp
+    include/hex/helpers/socket.hpp
+    include/hex/helpers/utils.hpp
+    include/hex/helpers/utils_macos.hpp
+    include/hex/helpers/types.hpp
+    include/hex/helpers/fs.hpp
+    include/hex/helpers/fs_macos.hpp
+    include/hex/helpers/file.hpp
+    include/hex/helpers/concepts.hpp
+    include/hex/helpers/crypto.hpp
+    include/hex/helpers/disassembler.hpp
+    include/hex/helpers/encoding_file.hpp
+    include/hex/helpers/fmt.hpp
+    include/hex/helpers/intrinsics.hpp
+    include/hex/helpers/literals.hpp
+    include/hex/helpers/magic.hpp
+    include/hex/helpers/patches.hpp
+    include/hex/helpers/tar.hpp
+    include/hex/helpers/logger.hpp
+
+    include/hex/api/content_registry.hpp
+    include/hex/api/event.hpp
+    include/hex/api/imhex_api.hpp
+    include/hex/api/keybinding.hpp
+    include/hex/api/localization.hpp
+    include/hex/api/plugin_manager.hpp
+    include/hex/api/project_file_manager.hpp
+    include/hex/api/task.hpp
+
+    include/hex/data_processor/attribute.hpp
+    include/hex/data_processor/link.hpp
+    include/hex/data_processor/node.hpp
+
+    include/hex/providers/buffered_reader.hpp
+    include/hex/providers/overlay.hpp
+    include/hex/providers/provider.hpp
+
+    include/hex/ui/imgui_imhex_extensions.h
+    include/hex/ui/view.hpp
+)
 
 if (APPLE)
     set(OSX_11_0_SDK_PATH  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk)
@@ -153,14 +198,13 @@ if (APPLE)
         endif ()
     endif ()
 
-    set(LIBIMHEX_SOURCES ${LIBIMHEX_SOURCES}
-            source/helpers/fs_macos.m
-            source/helpers/utils_macos.m)
+    target_sources(libimhex PRIVATE
+        source/helpers/fs_macos.m
+        source/helpers/utils_macos.m
+    )
 endif ()
 
 add_compile_definitions(IMHEX_PROJECT_NAME="${PROJECT_NAME}")
-
-add_library(libimhex SHARED ${LIBIMHEX_SOURCES})
 set_target_properties(libimhex PROPERTIES POSITION_INDEPENDENT_CODE ON)
 setupCompilerWarnings(libimhex)
 
